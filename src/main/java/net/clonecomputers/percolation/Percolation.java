@@ -23,9 +23,20 @@ public class Percolation implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			System.out.println(pathLength);
+			System.out.println(pathLength+".csv");
 			
-			//TODO: process and save the state, and print out some usefull information
+			for(int y = 0; y <= pathLength; y++) {
+				for(int x = 0; x <= pathLength; x++) {
+					double p = 0;
+					if(x+y <= pathLength) {
+						for(Configuration c: state) {
+							if(c.isOn(x, y)) p += c.getProbability();
+						}
+					}
+					System.out.printf("%.16f, ", p);
+				}
+				System.out.println();
+			}
 
 			step();
 		}

@@ -57,6 +57,14 @@ public class Configuration {
 		return isZero(new Point(x,y));
 	}
 	
+	public boolean isOn(Point p) {
+		return getPoint(p) > 0;
+	}
+	
+	public boolean isOn(int x, int y) {
+		return isOn(new Point(x,y));
+	}
+	
 	public void setPoint(Point p, byte value, double probability) {
 		Byte oldValue = points.put(p, value);
 		if(oldValue != null && oldValue == 1) ones.remove(p);
