@@ -17,7 +17,7 @@ public class Configuration {
 	
 	public Configuration(Configuration parent) {
 		this.parent = parent;
-		this.probability = parent.getProbability();
+		this.probability = parent==null? 1: parent.getProbability();
 	}
 	
 	public double getProbability() {
@@ -58,7 +58,9 @@ public class Configuration {
 	}
 	
 	public void setPoint(Point p, byte value, double probability) {
-		points.put(p, value);
+		Byte oldValue = points.put(p, value);
+		if(oldValue != null && oldValue == 1) ones.remove(p);
+		if(value == 1) ones.add(p);
 		this.probability *= probability;
 	}
 	
@@ -112,7 +114,7 @@ public class Configuration {
 		return new ArrayList<>(zeroesNeighboringOnes);
 	}
 
-	private static List<Point> neighbors(Point p) {
+	public static List<Point> neighbors(Point p) {
 		return Arrays.asList(new Point(p.x, p.y+1),new Point(p.x+1, p.y),new Point(p.x, p.y-1),new Point(p.x-1, p.y));
 	}
 }
